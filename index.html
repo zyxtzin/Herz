@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para alguém especial... 🌸</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffe5ec; 
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Caixa do Pedido Principal */
+        .card {
+            background-color: #ffffff; 
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 8px 20px rgba(251, 111, 146, 0.3); 
+            text-align: center;
+            border: 3px solid #fb6f92; 
+            max-width: 85%;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+        }
+
+        h1 {
+            color: #ff477e; 
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #fb6f92;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        /* Container dos botões perfeitamente alinhados */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px; /* Espaço certinho entre eles */
+            width: 100%;
+            height: 50px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        #btnSim {
+            background-color: #ff477e; 
+            color: white;
+            box-shadow: 0px 4px 10px rgba(255, 71, 126, 0.4);
+            z-index: 11;
+        }
+
+        #btnNao {
+            background-color: #ffb3c1; 
+            color: #ff477e;
+            z-index: 12;
+            transition: top 0.1s ease, left 0.1s ease; /* Movimento suave ao fugir */
+        }
+
+        /* Nova Caixa de Sucesso Fofa (Substitui o alert feio) */
+        .success-card {
+            display: none; /* Começa escondida */
+            background-color: #ffffff;
+            padding: 35px 25px;
+            border-radius: 20px;
+            box-shadow: 0px 8px 20px rgba(251, 111, 146, 0.4);
+            text-align: center;
+            border: 3px solid #ff477e;
+            max-width: 80%;
+            z-index: 20;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .success-card h2 {
+            color: #ff477e;
+            margin-bottom: 15px;
+            font-size: 26px;
+        }
+
+        .success-card p {
+            color: #fb6f92;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Corações flutuantes ao fundo */
+        .heart {
+            position: absolute;
+            color: #ffb3c1;
+            font-size: 22px;
+            animation: float 4s infinite ease-in-out;
+            opacity: 0.6;
+            user-select: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-120px) scale(1.4); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Elementos decorativos de fundo -->
+    <div class="heart" style="top: 25%; left: 8%; animation-delay: 0s;">💖</div>
+    <div class="heart" style="top: 65%; left: 85%; animation-delay: 1.2s;">🌸</div>
+    <div class="heart" style="top: 35%; left: 78%; animation-delay: 2s;">💝</div>
+    <div class="heart" style="top: 75%; left: 12%; animation-delay: 0.6s;">✨</div>
+
+    <!-- Tela do Pedido -->
+    <div class="card" id="mainCard">
+        <h1>Tenho uma pergunta importante... </h1>
+        <p>aceita comer um pastel com caldo de cana cmg? rs</p>
+        
+        <div class="btn-container">
+            <button id="btnSim" onclick="aceitou()">SIM!</button>
+            <button id="btnNao" onmouseover="fuga()" onclick="fuga()">NÃO</button>
+        </div>
+    </div>
+
+    <!-- Tela Fofa de Sucesso Profissional -->
+    <div class="success-card" id="successCard">
+        <h2>Ebaaaa!❤</h2>
+        <p>so um problema,  teremos que sair correndo por que eu nao tenho dinheiro</p>
+        <p style="font-size: 24px; margin-top: 15px;"> 🫠</p>
+        <p style="font-size: 14px; color: #ffb3c1; margin-bottom: 0;">Prometo te fazer sorrir todos os dias!</p>
+    </div>
+
+    <script>
+        const btnNao = document.getElementById('btnNao');
+        const mainCard = document.getElementById('mainCard');
+        const successCard = document.getElementById('successCard');
+
+        // Lógica profissional para o botão fugir para qualquer canto da tela
+        function fuga() {
+            const larguraTela = window.innerWidth - btnNao.offsetWidth - 30;
+            const alturaTela = window.innerHeight - btnNao.offsetHeight - 30;
+
+            const novoX = Math.floor(Math.random() * larguraTela);
+            const novoY = Math.floor(Math.random() * alturaTela);
+
+            btnNao.style.position = 'fixed';
+            btnNao.style.left = novoX + 'px';
+            btnNao.style.top = novoY + 'px';
+        }
+
+        // Troca de caixas com efeito visual limpo (sem alertas do navegador)
+        function aceitou() {
+            mainCard.style.display = 'none'; // Some com o pedido original
+            successCard.style.display = 'block'; // Mostra a linda mensagem fofa
+        }
+    </script>
+</body>
+</html>
